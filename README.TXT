@@ -4,9 +4,9 @@ Tell the reader (someone who does not know anything about this project)
 all they need to know. The comments should usually include at least:
 ------------------------------------------------------------------------
 
-PROJECT TITLE:
-PURPOSE OF PROJECT:
-VERSION or DATE:
-HOW TO START THIS PROJECT:
-AUTHORS:
-USER INSTRUCTIONS:
+PROJECT TITLE: Modul 1 OOP 
+PURPOSE OF PROJECT: Praktikum
+VERSION or DATE: 11 September 2021
+HOW TO START THIS PROJECT: Compile and Run the program
+AUTHORS: Darvin - 1906300694
+USER INSTRUCTIONS: Simple program bro, easy to use
