@@ -3,6 +3,7 @@ comment0.target=Product
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ Product\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=id\ storeId\ name\ weight\ conditionUsed\ priceTag\ category
 comment1.target=Product(int,\ int,\ java.lang.String,\ int,\ boolean,\ PriceTag,\ ProductCategory)
+comment1.text=\r\n\ Menambahkan\ overloading\ constructor\r\n
 comment2.params=id\ store\ name\ weight\ conditionUsed\ priceTag\ category
 comment2.target=Product(int,\ Store,\ java.lang.String,\ int,\ boolean,\ PriceTag,\ ProductCategory)
 comment3.params=content

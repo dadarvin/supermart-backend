@@ -20,6 +20,9 @@ class Product extends Recognizable implements FileParser{
     
     public Store store;
     
+    /**
+     * Menambahkan overloading constructor
+     */
     public Product(int id, int storeId, String name, int weight, boolean conditionUsed, 
     PriceTag priceTag, ProductCategory category){
         super(id);
