@@ -11,10 +11,16 @@ public class Recognizable
 {
     final public int id;
     
+    /**
+     * @param id untuk memberikan id product
+     */
     protected Recognizable(int id){
         this.id = id;
     }
     
+    /**
+     * @return bergantung pada hasil komparasi id
+     */
     public boolean equals(Object object){
         if (object instanceof Recognizable){
             Recognizable rec = (Recognizable)object;
@@ -24,6 +30,9 @@ public class Recognizable
         }
     }
     
+    /**
+     * @return memberiakn true jika id sama dengan objek Recognizable
+     */
     public boolean equals(Recognizable rec){
         return (this.id == rec.id);
     }
