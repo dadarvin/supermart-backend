@@ -37,7 +37,7 @@ public class PriceTag
         if(discount >= 100.0){
             return 0.0;
         } else{
-            return (price - (price * discount));
+            return (price - (price * discount/100));
         }
     }
     

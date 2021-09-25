@@ -9,7 +9,7 @@ package DarvinJmartMH;
  */
 
 
-public class Coupon
+public class Coupon extends Recognizable implements FileParser
 {
     
     public enum Type
@@ -25,9 +25,9 @@ public class Coupon
     
     private boolean used;
     
-    public Coupon(String name, int code, Type type, double cut, double minimum){
+    public Coupon(int id,String name, int code, Type type, double cut, double minimum){
+        super(id);    
         used = false;
-        
         this.name = name;
         this.code = code;
         this.type = type;
@@ -59,5 +59,17 @@ public class Coupon
         } else {
             return price;
         }
+    }
+    
+    public boolean read(String content){
+        return false;
+    }
+    
+    public Object write(){
+        return null;
+    }
+    
+    public static Object newInstance(String content){
+        return null;
     }
 }
