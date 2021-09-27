@@ -31,11 +31,12 @@ public class Store extends Recognizable implements FileParser
         return false;
     }
     
-    public Object write(){
-        return null;
-    }
-    
-    public static Object newInstance(String content){
-        return null;
+    /*
+     * @return Mengembalikan informasi toko
+     */
+    public String toString(){
+        return "name: " + this.name + 
+        "\naddress: " + this.address + 
+        "\nphoneNumber: " + this.phoneNumber;
     }
 }

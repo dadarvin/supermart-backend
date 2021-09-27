@@ -9,7 +9,7 @@ package DarvinJmartMH;
  */
 public class PriceTag
 {
-    // instance variables - replace the example below with your own
+    
     public final static double COMMISSION_MULTIPLIER = 0.05;
     public final static double BOTTOM_PRICE = 20000.0;
     public final static double BOTTOM_FEE = 1000.0;

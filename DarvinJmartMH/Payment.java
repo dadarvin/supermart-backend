@@ -7,21 +7,18 @@ package DarvinJmartMH;
  * @author Darvin
  * @version Modul 3
  */
-public class Payment extends Transaction implements FileParser
+public class Payment extends Invoice implements Transactor
 {
-    public int productId;
-    public ShipmentDuration shipmentDuration;
+    public int productCount;
+    public Shipment shipment;
     
-    public Payment(int id, int buyerId, Product product, ShipmentDuration shipmentDuration){
-        super(id, buyerId, product.storeId);
-        this.productId = product.id;
-        this.shipmentDuration = shipmentDuration;
-    }
-    
-    public Payment(int id, int buyerId, int storeId, int productId, ShipmentDuration shipmentDuration){
-        super(id, buyerId, storeId);
-        this.productId = productId;
-        this.shipmentDuration = shipmentDuration;
+    /*
+     * @param Berisi id, banyak produk, dan jenis pengiriman yang dilakukan
+     */
+    public Payment(int id, int buyerId, int productId, int productCount, Shipment shipment){
+        super(id, buyerId, productId);
+        this.productCount = productCount;
+        this.shipment = shipment;
     }
     
      public boolean validate()
@@ -29,13 +26,12 @@ public class Payment extends Transaction implements FileParser
         return false;
     }
     
-    public Transaction perform()
+    public Invoice perform()
     {
         return null;
     }
     
-    public boolean read(String content)
-    {
-        return false;
+    public double getTotalPay(){
+        return 0;
     }
 }

@@ -24,11 +24,12 @@ public class Account extends Recognizable implements FileParser
         return false;
     }
     
-    public Object write(){
-        return null;
-    }
-    
-    public static Object newInstance(String content){
-        return null;
+    /*
+     * @return Mengembalikan informasi akun
+     */
+    public String toString(){
+        return "name: " + this.name + 
+        "\nemail: " + this.email + 
+        "\npassword: "+ this.password;
     }
 }

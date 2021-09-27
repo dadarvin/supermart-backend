@@ -23,9 +23,10 @@ public class Jmart
     public static Coupon createCoupun(){
         return new Coupon("MakanEnak",30,Coupon.Type.DISCOUNT,20.0,5.0);
     }
-    */
+    
    
     public static ShipmentDuration createShipmentDuration() {
         return new ShipmentDuration(ShipmentDuration.INSTANT, ShipmentDuration.KARGO);
     }
+    */
 }

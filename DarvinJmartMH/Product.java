@@ -8,23 +8,20 @@ package DarvinJmartMH;
  * @version (a version number or a date)
  */
 class Product extends Recognizable implements FileParser{
-    private static int idCounter = 0;
+    public int storeId;
     public String name;
     public int weight;
     public boolean conditionUsed;
-    public int storeId;
-    
     public PriceTag priceTag;
     public ProductCategory category;
     public ProductRating rating;
-    
-    public Store store;
+    public Shipment.MultiDuration multiDuration;
     
     /**
      * Menambahkan overloading constructor
      */
-    public Product(int id, int storeId, String name, int weight, boolean conditionUsed, 
-    PriceTag priceTag, ProductCategory category){
+    public Product(int id, int storeId, String name, int weight, boolean conditionUsed,
+    PriceTag priceTag, ProductCategory category, Shipment.MultiDuration multiDuration){
         super(id);
         this.storeId = storeId;
         this.name = name;
@@ -33,28 +30,23 @@ class Product extends Recognizable implements FileParser{
         this.priceTag = priceTag;
         this.category = category;
         this.rating = new ProductRating();
-    }
-    
-    public Product(int id, Store store, String name, int weight, boolean conditionUsed, 
-    PriceTag priceTag, ProductCategory category){
-        super(id);
-        this.store = store;
-        this.name = name;
-        this.weight = weight;
-        this.conditionUsed = conditionUsed;
-        this.priceTag = priceTag;
-        this.category = category;
+        this.multiDuration = multiDuration;
     }
     
     public boolean read(String content){
         return false;
     }
     
-    public Object write(){
-        return null;
-    }
-    
-    public static Object newInstance(String content){
-        return null;
+    /*
+     * @return Mengembalikan informasi pemilik produk
+     */
+    public String toString(){
+        return "Name: " + this.name +
+        "\nWeight: " + this.weight +
+        "\nconditionUsed: " + this.conditionUsed +
+        "\npriceTag: " + this.priceTag +
+        "\ncategory: " + this.category +
+        "\nrating: " + this.rating +
+        "\nstoreId: " + this.storeId;
     }
 }
