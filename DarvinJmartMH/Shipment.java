@@ -59,8 +59,4 @@ public class Shipment implements FileParser
     public boolean read(String content){
         return false;
     }
-    
-    public Object write(){
-        return FileParser.super.write();    
-    }
 }

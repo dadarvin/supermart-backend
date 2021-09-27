@@ -5,6 +5,4 @@ comment1.params=address\ shipmentCost\ duration\ receipt
 comment1.target=Shipment(java.lang.String,\ int,\ Shipment.Duration,\ java.lang.String)
 comment2.params=content
 comment2.target=boolean\ read(java.lang.String)
-comment3.params=
-comment3.target=java.lang.Object\ write()
-numComments=4
+numComments=3
