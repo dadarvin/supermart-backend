@@ -9,10 +9,6 @@ import java.util.ArrayList;
  */
 public class Filter
 {
-    private Filter(){
-    
-    }
-    
     public static ArrayList<PriceTag> filterPriceTag(PriceTag[] list, int value, boolean less){
         ArrayList<PriceTag> priceTags = new ArrayList<>();
         
