@@ -1,5 +1,5 @@
 package DarvinJmartMH;
-
+import java.util.Date;
 
 /**
  * Write a description of class Complaint here.
@@ -9,7 +9,7 @@ package DarvinJmartMH;
  */
 public class Complaint extends Recognizable implements FileParser
 {
-    public String date;
+    public Date date;
     public String desc;
     
     /*
@@ -19,7 +19,7 @@ public class Complaint extends Recognizable implements FileParser
     public Complaint(int id, String desc){
         super(id);
         this.desc = desc;
-        this.date = "27/09/2020";
+        this.date = new Date();
     }
     
     public boolean read(String content){

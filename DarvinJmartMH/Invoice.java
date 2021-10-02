@@ -1,5 +1,5 @@
 package DarvinJmartMH;
-
+import java.util.Date;
 
 /**
  * Write a description of class Invoice here.
@@ -9,7 +9,7 @@ package DarvinJmartMH;
  */
 public abstract class Invoice extends Recognizable implements FileParser
 {
-    public String date;
+    public Date date;
     public int buyerId;
     public int productId;
     public int complaintId;
@@ -28,7 +28,7 @@ public abstract class Invoice extends Recognizable implements FileParser
     
     protected Invoice(int id, int buyerId, int productId){
         super(id);
-        this.date="27/09/2021";
+        this.date = new Date();
         this.buyerId = buyerId;
         this.rating = Rating.NEUTRAL;
         this.status = Status.ON_PROGRESS;

@@ -1,5 +1,7 @@
 package DarvinJmartMH;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Write a description of class Shipment here.
@@ -16,11 +18,13 @@ public class Shipment implements FileParser
     
     //innerClass untuk jenis kurir dari ShipmentDuration
     static class Duration{
-        public static Duration INSTANT = new Duration((byte)(1<<0));
-        public static Duration SAME_DAY = new Duration((byte)(1<<1));
-        public static Duration NEXT_DAY = new Duration((byte)(1<<2));
-        public static Duration REGULER = new Duration((byte)(1<<3));
-        public static Duration KARGO = new Duration((byte)(1<<4));
+        public static final SimpleDateFormat ESTIMATION_FORMAT = new SimpleDateFormat("E MMM dd yyyy");
+        
+        public static final Duration INSTANT = new Duration((byte)(1<<0));
+        public static final Duration SAME_DAY = new Duration((byte)(1<<1));
+        public static final Duration NEXT_DAY = new Duration((byte)(1<<2));
+        public static final Duration REGULER = new Duration((byte)(1<<3));
+        public static final Duration KARGO = new Duration((byte)(1<<4));
         
         private final byte bit;
         
@@ -28,7 +32,23 @@ public class Shipment implements FileParser
             this.bit = bit;
         }
         
-    }
+        public String getEstimatedArrival(Date reference){
+            Calendar est = Calendar.getInstance();
+            est.setTime(reference);
+            
+            if(bit == Duration.INSTANT.bit || bit == Duration.SAME_DAY.bit){
+                est.add(Calendar.DATE, 0);
+            } else if(bit == Duration.NEXT_DAY.bit){
+                est.add(Calendar.DATE, 1);
+            } else if(bit == Duration.REGULER.bit){
+                est.add(Calendar.DATE, 2);
+            } else if(bit == Duration.KARGO.bit){
+                est.add(Calendar.DATE, 3);
+            }
+            
+            return ESTIMATION_FORMAT.format(est.getTime());
+        }
+    }   
     
     //innerClass dari ShipmentDuration untuk mencari kesamaan
     class MultiDuration{
