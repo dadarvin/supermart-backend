@@ -1,5 +1,6 @@
 package DarvinJmartMH;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * Write a description of class Complaint here.
@@ -24,5 +25,10 @@ public class Complaint extends Recognizable implements FileParser
     
     public boolean read(String content){
         return false;
+    }
+    
+    public String toString(){
+        SimpleDateFormat COMPLAINT_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+        return "Complaint{date=" + COMPLAINT_FORMAT.format(date) + ", desc='"+ desc +"'}";
     }
 }
