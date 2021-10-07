@@ -11,7 +11,12 @@ import java.util.Date;
 public class Jmart
 {
     public static void main(String args[]){
-        
+        System.out.println("Darvin - 1906300694");
+        System.out.println(Shipment.Duration.KARGO.getEstimatedArrival(new Date()));
+        Complaint complaint = new Complaint(001, "Pengiriman sangat cepat, tapi kurir tersesat");
+        System.out.print(complaint);
+        Account account = new Account(1, "Darvin", "darvin.yap@ui.ac.id", "Darvin1a1a");
+        System.out.println(account.validate());
     }
     
     /*
