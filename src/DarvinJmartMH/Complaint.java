@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
  * @author Darvin
  * @version Modul 3
  */
-public class Complaint extends Recognizable implements FileParser
+public class Complaint extends Recognizable
 {
     public Date date;
     public String desc;
@@ -18,14 +18,10 @@ public class Complaint extends Recognizable implements FileParser
      * @param desc menjelaskan keterangan complaint
      */
     public Complaint(int id, String desc){
-        super(id);
         this.desc = desc;
         this.date = new Date();
     }
-    
-    public boolean read(String content){
-        return false;
-    }
+
     
     public String toString(){
         SimpleDateFormat COMPLAINT_FORMAT = new SimpleDateFormat("dd/MM/yyyy");

@@ -1,5 +1,9 @@
 package DarvinJmartMH;
-import java.util.Date;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
+import com.google.gson.*;
 
 /**
  * Write a description of class Jmart here.
@@ -10,29 +14,25 @@ import java.util.Date;
 
 public class Jmart
 {
+    class Country{
+        public String name;
+        public int population;
+        public List<String> listOfStates;
+    }
+
     public static void main(String args[]){
-        System.out.println("Darvin - 1906300694");
-        System.out.println(Shipment.Duration.KARGO.getEstimatedArrival(new Date()));
-        Complaint complaint = new Complaint(001, "Pengiriman sangat cepat, tapi kurir tersesat");
-        System.out.print(complaint);
-        Account account = new Account(1, "Darvin", "darvin.yap@ui.ac.id", "Darvin1a1a");
-        System.out.println(account.validate());
+        String filepath = "C:\\@Pen&Pin\\Dar\\OOP\\OOP_prak\\jmart\\city.json";
+        Gson gson = new Gson();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filepath));
+            Country input = gson.fromJson(br, Country.class);
+            System.out.println("Name: " + input.name);
+            System.out.println("Population: " + input.population);
+            System.out.println("States: ");
+            input.listOfStates.forEach(state -> System.out.println(state));
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
-    
-    /*
-    public static Product createProduct(){
-        PriceTag priceTag = new PriceTag(25000);
-        Product product = new Product("Fresh Cold Milk", 3, false, priceTag, ProductCategory.KITCHEN);
-        return product;
-    }
-    
-    public static Coupon createCoupun(){
-        return new Coupon("MakanEnak",30,Coupon.Type.DISCOUNT,20.0,5.0);
-    }
-    
-   
-    public static ShipmentDuration createShipmentDuration() {
-        return new ShipmentDuration(ShipmentDuration.INSTANT, ShipmentDuration.KARGO);
-    }
-    */
+
 }

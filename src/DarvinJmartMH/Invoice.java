@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @author Darvin
  * @version Modul 3 Tutam
  */
-public abstract class Invoice extends Recognizable implements FileParser
+public abstract class Invoice extends Recognizable
 {
     public Date date;
     public ArrayList<Record> history = new ArrayList<Record>();
@@ -35,17 +35,12 @@ public abstract class Invoice extends Recognizable implements FileParser
     }
     
     protected Invoice(int id, int buyerId, int productId){
-        super(id);
         this.date = new Date();
         this.buyerId = buyerId;
         this.rating = Rating.NEUTRAL;
         this.status = Status.ON_PROGRESS;
     }
-    
-    public boolean read(String content){
-        return false;
-    }
-    
+
     public abstract double getTotalPay();
 
 }

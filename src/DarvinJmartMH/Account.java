@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  * @author Darvin
  * @version Modul 3
  */
-public class Account extends Recognizable implements FileParser
+public class Account extends Recognizable
 {
     
     public static final String REGEX_EMAIL = "^[a-zA-Z0-9&*_~]+(\\.[a-zA-Z0-9&*_~]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
@@ -18,14 +18,9 @@ public class Account extends Recognizable implements FileParser
     public String password;
     
     public Account(int id, String name, String email, String password){
-        super(id);
         this.name = name;
         this.email = email;
         this.password = password;
-    }
-    
-    public boolean read(String content){
-        return false;
     }
     
     /*

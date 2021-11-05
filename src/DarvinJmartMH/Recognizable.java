@@ -9,12 +9,9 @@ package DarvinJmartMH;
 public class Recognizable implements Comparable<Recognizable>
 {
     final public int id;
-    
-    /**
-     * @param id untuk memberikan id product
-     */
-    protected Recognizable(int id){
-        this.id = id;
+
+    protected Recognizable(){
+        this.id = 8;
     }
 
     @Override

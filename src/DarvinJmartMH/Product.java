@@ -7,36 +7,31 @@ package DarvinJmartMH;
  * @author (your name)
  * @version (a version number or a date)
  */
-class Product extends Recognizable implements FileParser{
-    public int storeId;
-    public String name;
-    public int weight;
-    public boolean conditionUsed;
-    public PriceTag priceTag;
+class Product extends Recognizable{
+    public int accountId;
     public ProductCategory category;
-    public ProductRating rating;
-    public Shipment.MultiDuration multiDuration;
+    public boolean conditionUsed;
+    public double discount;
+    public String name;
+    public double price;
+    public byte shipmentPlans;
+    public int weight;
+
     
     /**
      * Menambahkan overloading constructor
      */
-    public Product(int id, int storeId, String name, int weight, boolean conditionUsed,
-    PriceTag priceTag, ProductCategory category, Shipment.MultiDuration multiDuration){
-        super(id);
-        this.storeId = storeId;
+    public Product(int accountId, String name, int weight, boolean conditionUsed, double price, double discount, ProductCategory category, byte shipmentPlans){
+        this.accountId = accountId;
         this.name = name;
         this.weight = weight;
         this.conditionUsed = conditionUsed;
-        this.priceTag = priceTag;
+        this.price = price;
+        this.discount = discount;
         this.category = category;
-        this.rating = new ProductRating();
-        this.multiDuration = multiDuration;
+        this.shipmentPlans = shipmentPlans;
     }
-    
-    public boolean read(String content){
-        return false;
-    }
-    
+
     /*
      * @return Mengembalikan informasi pemilik produk
      */
@@ -44,9 +39,9 @@ class Product extends Recognizable implements FileParser{
         return "Name: " + this.name +
         "\nWeight: " + this.weight +
         "\nconditionUsed: " + this.conditionUsed +
-        "\npriceTag: " + this.priceTag +
+        "\nPrice: " + this.price +
         "\ncategory: " + this.category +
-        "\nrating: " + this.rating +
-        "\nstoreId: " + this.storeId;
+        "\ndiscount: " + this.discount +
+        "\naccountId: " + this.accountId;
     }
 }
