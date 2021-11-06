@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
  * @author Darvin
  * @version Modul 3
  */
-public class Complaint extends Recognizable
+public class Complaint extends Serializable
 {
     public Date date;
     public String desc;

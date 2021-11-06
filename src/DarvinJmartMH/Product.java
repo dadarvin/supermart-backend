@@ -7,7 +7,7 @@ package DarvinJmartMH;
  * @author (your name)
  * @version (a version number or a date)
  */
-class Product extends Recognizable{
+class Product extends Serializable {
     public int accountId;
     public ProductCategory category;
     public boolean conditionUsed;

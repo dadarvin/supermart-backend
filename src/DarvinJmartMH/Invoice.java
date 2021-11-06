@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @author Darvin
  * @version Modul 3 Tutam
  */
-public abstract class Invoice extends Recognizable
+public abstract class Invoice extends Serializable
 {
     public Date date;
     public ArrayList<Record> history = new ArrayList<Record>();
@@ -34,9 +34,10 @@ public abstract class Invoice extends Recognizable
         public Status status;
     }
     
-    protected Invoice(int id, int buyerId, int productId){
+    protected Invoice(int buyerId, int productId){
         this.date = new Date();
         this.buyerId = buyerId;
+        this.productId = productId;
         this.rating = Rating.NEUTRAL;
         this.status = Status.ON_PROGRESS;
     }

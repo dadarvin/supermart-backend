@@ -15,8 +15,8 @@ public class Payment extends Invoice
     /*
      * @param Berisi id, banyak produk, dan jenis pengiriman yang dilakukan
      */
-    public Payment(int id, int buyerId, int productId, int productCount, Shipment shipment){
-        super(id, buyerId, productId);
+    public Payment(int buyerId, int productId, int productCount, Shipment shipment){
+        super(buyerId, productId);
         this.productCount = productCount;
         this.shipment = shipment;
     }

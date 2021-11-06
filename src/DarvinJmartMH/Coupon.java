@@ -1,8 +1,6 @@
 package DarvinJmartMH;
 
 
-import javax.swing.*;
-
 /**
  * Write a description of class Coupon here.
  *
@@ -11,7 +9,7 @@ import javax.swing.*;
  */
 
 
-public class Coupon extends Recognizable
+public class Coupon extends Serializable
 {
     
     public enum Type
