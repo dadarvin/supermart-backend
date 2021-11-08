@@ -110,7 +110,6 @@ public class Jmart
 
     private static List<Product> paginate (List<Product> list, int page, int pageSize, Predicate<Product> pred){
         List<Product> filteredList = new ArrayList<Product>();
-        List<Product> paginatedList = new ArrayList<Product>();
         int tempIndex = (page * pageSize);
 
         for(Product p : list){
@@ -120,9 +119,7 @@ public class Jmart
         }
 
         //Membagi Arraylist dalam bentuk sublist sesuai page dan pageSize
-        for(int i = tempIndex; i < tempIndex + pageSize; i++){
-            paginatedList.add(filteredList.get(i));
-        }
+        List<Product> paginatedList = filteredList.subList((page * pageSize), (page * pageSize)+pageSize);
 
         return paginatedList;
     }
