@@ -17,11 +17,6 @@ import com.google.gson.stream.JsonReader;
 
 public class Jmart
 {
-//    class Country{
-//        public String name;
-//        public int population;
-//        public List<String> listOfStates;
-//    }
 
     class Product{
         public int accountId;
@@ -35,6 +30,13 @@ public class Jmart
         public int id;
     }
 
+    public static List<Product> filterByAccountId (List<Product> list, int accountId, int page, int pageSize){
+        //Menggunakan interface Predicate untuk memberikan kondisi
+        Predicate<Product> predicate = p -> (p.accountId == accountId);
+
+        return paginate(list, page, pageSize, predicate);
+    }
+
     public static List<Product> filterByCategory (List<Product> list, ProductCategory category){
         List<Product> filteredList = new ArrayList<Product>();
 
@@ -45,6 +47,13 @@ public class Jmart
         }
 
         return filteredList;
+    }
+
+    public static List<Product> filterByName (List<Product> list, String search, int page, int pageSize){
+        //Menggunakan interface Predicate untuk mencari kata pada variabel search
+        Predicate<Product> predicate = p -> (p.name.toLowerCase().contains(search.toLowerCase()));
+
+        return paginate(list, page, pageSize, predicate);
     }
 
     public static List<Product> filterByPrice (List<Product> list, double minPrice, double maxPrice){
@@ -85,15 +94,40 @@ public class Jmart
 
         try{
             List<Product> list = read("C:\\@Pen&Pin\\Dar\\OOP\\OOP_prak\\jmart\\src\\goldenSample\\randomProductList.json");
-//            List<Product> list = read("../goldenSample/randomProductList.json");
+
             List<Product> filtered = filterByPrice(list, 0.0, 20000.0);
             filtered.forEach(product -> System.out.println(product.price));
+
+            List<Product> filteredName = filterByName(list, "AMD", 1, 6);
+            filteredName.forEach(product -> System.out.println(product.name));
+
+            List<Product> filteredAccount = filterByAccountId(list, 3,1, 5);
+            filteredAccount.forEach(product -> System.out.println(product.name));
         } catch (Throwable t){
             t.printStackTrace();
         }
     }
 
-    public static List<Product> read(String filepath) throws FileNotFoundException
+    private static List<Product> paginate (List<Product> list, int page, int pageSize, Predicate<Product> pred){
+        List<Product> filteredList = new ArrayList<Product>();
+        List<Product> paginatedList = new ArrayList<Product>();
+        int tempIndex = (page * pageSize);
+
+        for(Product p : list){
+            if(pred.predicate(p)){
+                filteredList.add(p);
+            }
+        }
+
+        //Membagi Arraylist dalam bentuk sublist sesuai page dan pageSize
+        for(int i = tempIndex; i < tempIndex + pageSize; i++){
+            paginatedList.add(filteredList.get(i));
+        }
+
+        return paginatedList;
+    }
+
+    public static List<Product> read (String filepath) throws FileNotFoundException
     {
         Gson gson = new Gson();
         JsonReader jsonReader = new JsonReader(new FileReader(filepath));
