@@ -17,7 +17,6 @@ import com.google.gson.stream.JsonReader;
 
 public class Jmart
 {
-
     class Product{
         public int accountId;
         public ProductCategory category;
@@ -84,25 +83,36 @@ public class Jmart
     }
 
     public static void main(String args[]){
-        System.out.println("Account Id: " + new Account(null, null, null, -1).id);
-        System.out.println("Account Id: " + new Account(null, null, null, -1).id);
-        System.out.println("Account Id: " + new Account(null, null, null, -1).id);
+//        System.out.println("Account Id: " + new Account(null, null, null, -1).id);
+//        System.out.println("Account Id: " + new Account(null, null, null, -1).id);
+//        System.out.println("Account Id: " + new Account(null, null, null, -1).id);
 
-        System.out.println("Payment Id: " + new Payment(-1, -1, -1, null).id);
-        System.out.println("Payment Id: " + new Payment(-1, -1, -1, null).id);
-        System.out.println("Payment Id: " + new Payment(-1, -1, -1, null).id);
+//        System.out.println("Payment Id: " + new Payment(-1, -1, -1, null).id);
+//        System.out.println("Payment Id: " + new Payment(-1, -1, -1, null).id);
+//        System.out.println("Payment Id: " + new Payment(-1, -1, -1, null).id);
 
         try{
-            List<Product> list = read("C:\\@Pen&Pin\\Dar\\OOP\\OOP_prak\\jmart\\src\\goldenSample\\randomProductList.json");
+//            List<Product> list = read("C:\\@Pen&Pin\\Dar\\OOP\\OOP_prak\\jmart\\src\\goldenSample\\randomProductList.json");
+//
+//            List<Product> filtered = filterByPrice(list, 0.0, 20000.0);
+//            filtered.forEach(product -> System.out.println(product.price));
+//
+//            List<Product> filteredName = filterByName(list, "AMD", 0, 5);
+//            filteredName.forEach(product -> System.out.println(product.name));
+//
+//            List<Product> filteredAccount = filterByAccountId(list, 3,1, 3);
+//            filteredAccount.forEach(product -> System.out.println(product.name));
 
-            List<Product> filtered = filterByPrice(list, 0.0, 20000.0);
-            filtered.forEach(product -> System.out.println(product.price));
+            String filepath = "C:\\@Pen&Pin\\Dar\\OOP\\OOP_prak\\jmart\\src\\goldenSample\\tes.json";
 
-            List<Product> filteredName = filterByName(list, "AMD", 1, 6);
-            filteredName.forEach(product -> System.out.println(product.name));
+            JsonTable<Account> tableAccount = new JsonTable<Account>(Account.class, filepath);
+            tableAccount.add(new Account("name", "email", "password", 120.0));
+            tableAccount.writeJson();
 
-            List<Product> filteredAccount = filterByAccountId(list, 3,1, 5);
-            filteredAccount.forEach(product -> System.out.println(product.name));
+            tableAccount = new JsonTable<>(Account.class, filepath);
+            tableAccount.forEach(
+                    account -> System.out.println(account.toString())
+            );
         } catch (Throwable t){
             t.printStackTrace();
         }
@@ -110,6 +120,7 @@ public class Jmart
 
     private static List<Product> paginate (List<Product> list, int page, int pageSize, Predicate<Product> pred){
         List<Product> filteredList = new ArrayList<Product>();
+
         int tempIndex = (page * pageSize);
 
         for(Product p : list){
@@ -118,8 +129,12 @@ public class Jmart
             }
         }
 
-        //Membagi Arraylist dalam bentuk sublist sesuai page dan pageSize
-        List<Product> paginatedList = filteredList.subList((page * pageSize), (page * pageSize)+pageSize);
+//        List<Product> paginatedList = new ArrayList<Product>();
+//        // Membagi Arraylist dalam bentuk sublist sesuai page dan pageSize
+//        for(int i = tempIndex; i < tempIndex + pageSize; i++){
+//            paginatedList.add(filteredList.get(i));
+//        }
+        List<Product> paginatedList = filteredList.subList(tempIndex, (tempIndex+pageSize));
 
         return paginatedList;
     }
