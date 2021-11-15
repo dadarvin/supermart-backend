@@ -17,6 +17,11 @@ import com.google.gson.stream.JsonReader;
 
 public class Jmart
 {
+    public static long DELIVERED_LIMIT_MS = 1;
+    public static long ON_DELIVERY_LIMIT_MS = 2;
+    public static long ON_PROGRESS_LIMIT_MS = 3;
+    public static long WAITING_CONF_LIMIT_MS = 4;
+
     class Product{
         public int accountId;
         public ProductCategory category;
@@ -27,6 +32,28 @@ public class Jmart
         public int shipmentPlans;
         public int weight;
         public int id;
+    }
+
+    public static boolean paymentTimeKeeper(Payment payment){
+        Payment.Record record = payment.history.get(payment.history.size() - 1);
+        long elapsedTime = Math.abs(record.date.getTime() - (new Date()).getTime());
+
+        if(payment.history.size() != 0){
+            if(record.status == Invoice.Status.WAITING_CONFIRMATION && elapsedTime > WAITING_CONF_LIMIT_MS) {
+                payment.history.add(new Payment.Record(Invoice.Status.FAILED, "Waiting"));
+                return true;
+            } else if(record.status == Invoice.Status.ON_PROGRESS && elapsedTime > ON_PROGRESS_LIMIT_MS) {
+                payment.history.add(new Payment.Record(Invoice.Status.FAILED, "Progress"));
+                return true;
+            } else if(record.status == Invoice.Status.ON_DELIVERY && elapsedTime > ON_DELIVERY_LIMIT_MS) {
+                payment.history.add(new Payment.Record(Invoice.Status.DELIVERED, "Delivery"));
+                return false;
+            } else if(record.status == Invoice.Status.DELIVERED && elapsedTime > DELIVERED_LIMIT_MS) {
+                payment.history.add(new Payment.Record(Invoice.Status.FINISHED, "Finish"));
+                return true;
+            }
+        }
+        return false;
     }
 
     public static List<Product> filterByAccountId (List<Product> list, int accountId, int page, int pageSize){
@@ -83,36 +110,39 @@ public class Jmart
     }
 
     public static void main(String args[]){
-//        System.out.println("Account Id: " + new Account(null, null, null, -1).id);
-//        System.out.println("Account Id: " + new Account(null, null, null, -1).id);
-//        System.out.println("Account Id: " + new Account(null, null, null, -1).id);
-
-//        System.out.println("Payment Id: " + new Payment(-1, -1, -1, null).id);
-//        System.out.println("Payment Id: " + new Payment(-1, -1, -1, null).id);
-//        System.out.println("Payment Id: " + new Payment(-1, -1, -1, null).id);
-
         try{
-//            List<Product> list = read("C:\\@Pen&Pin\\Dar\\OOP\\OOP_prak\\jmart\\src\\goldenSample\\randomProductList.json");
-//
-//            List<Product> filtered = filterByPrice(list, 0.0, 20000.0);
-//            filtered.forEach(product -> System.out.println(product.price));
-//
-//            List<Product> filteredName = filterByName(list, "AMD", 0, 5);
-//            filteredName.forEach(product -> System.out.println(product.name));
-//
-//            List<Product> filteredAccount = filterByAccountId(list, 3,1, 3);
-//            filteredAccount.forEach(product -> System.out.println(product.name));
+            // sesuaikan argument dibawah dengan lokasi resource file yang Anda unduh di EMAS!
+            JsonTable<Payment> table = new JsonTable<>(Payment.class, "C:\\@Pen&Pin\\Dar\\OOP\\OOP_prak\\jmart\\src\\goldenSample\\randomPaymentList.json");
+            // membuat thread untuk payment pool
+            ObjectPoolThread<Payment>paymentPool =new ObjectPoolThread<Payment>("Thread-pp", Jmart::paymentTimeKeeper);
+            // menjalankan thread (ingat menggunakan start bukan run), run melakukan instruksi dalam current thread
+            paymentPool.start();
+            //tambahkan seluruh payment hasil baca ke dalam pool
+            table.forEach(payment ->paymentPool.add(payment));
+            // berikan sinyal untuk keluar dari routine apabila seluruh objek telah di proses
+            while (paymentPool.size() != 0);
+            paymentPool.exit();
+            // tunggu hingga thread selesai di eksekusi
+            while (paymentPool.isAlive());
+            // thread telah berhasil di selesaikan
+            System.out.println("Thread exited successfully");
+            // cek hasil output
+            Gson gson = new Gson();
+            table.forEach(payment -> {
+                String history = gson.toJson(payment.history);
+                System.out.println(history);
+            });
 
-            String filepath = "C:\\@Pen&Pin\\Dar\\OOP\\OOP_prak\\jmart\\src\\goldenSample\\tes.json";
-
-            JsonTable<Account> tableAccount = new JsonTable<Account>(Account.class, filepath);
-            tableAccount.add(new Account("name", "email", "password", 120.0));
-            tableAccount.writeJson();
-
-            tableAccount = new JsonTable<>(Account.class, filepath);
-            tableAccount.forEach(
-                    account -> System.out.println(account.toString())
-            );
+//            String filepath = "C:\\@Pen&Pin\\Dar\\OOP\\OOP_prak\\jmart\\src\\goldenSample\\tes.json";
+//
+//            JsonTable<Account> tableAccount = new JsonTable<Account>(Account.class, filepath);
+//            tableAccount.add(new Account("name", "email", "password", 120.0));
+//            tableAccount.writeJson();
+//
+//            tableAccount = new JsonTable<>(Account.class, filepath);
+//            tableAccount.forEach(
+//                    account -> System.out.println(account.toString())
+//            );
         } catch (Throwable t){
             t.printStackTrace();
         }

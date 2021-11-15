@@ -1,6 +1,10 @@
 package DarvinJmartMH;
 
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Write a description of class Payment here.
  *
@@ -9,6 +13,7 @@ package DarvinJmartMH;
  */
 public class Payment extends Invoice
 {
+    public ArrayList<Record> history = new ArrayList<>();
     public int productCount;
     public Shipment shipment;
     
@@ -20,8 +25,20 @@ public class Payment extends Invoice
         this.productCount = productCount;
         this.shipment = shipment;
     }
+
+    static class Record{
+        public final Date date;
+        public Status status;
+        public String message;
+
+        public Record(Status status, String message){
+            this.status = status;
+            this.message = message;
+            this.date = Calendar.getInstance().getTime();
+        }
+    }
     
-    public double getTotalPay(){
-        return 0;
+    public double getTotalPay(Product product){
+        return product.price * productCount;
     }
 }

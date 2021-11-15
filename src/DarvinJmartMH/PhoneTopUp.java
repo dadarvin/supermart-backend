@@ -7,10 +7,10 @@ public class PhoneTopUp extends Invoice{
     public PhoneTopUp(int buyerId, int productId, String phoneNumber) {
         super(buyerId, productId);
         this.phoneNumber = phoneNumber;
-        this.status = status;
     }
 
-     public double getTotalPay(){
-        return 0.00;
+    @Override
+     public double getTotalPay(Product product){
+        return product.price;
     }
 }

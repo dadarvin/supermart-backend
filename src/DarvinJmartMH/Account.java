@@ -25,17 +25,6 @@ public class Account extends Serializable
         this.password = password;
         this.balance = balance;
     }
-
-    /*
-     * @return Mengembalikan informasi akun
-     */
-    /*
-    public String toString(){
-        return "name: " + this.name + 
-        "\nemail: " + this.email + 
-        "\npassword: "+ this.password;
-    }
-    */
    
     public boolean validate(){
         Pattern emailPattern = Pattern.compile(REGEX_EMAIL);

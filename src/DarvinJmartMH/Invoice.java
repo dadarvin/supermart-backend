@@ -1,4 +1,5 @@
 package DarvinJmartMH;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
 
@@ -15,13 +16,15 @@ public abstract class Invoice extends Serializable
     public int buyerId;
     public int productId;
     public int complaintId;
-    public Rating rating;
+    public Rating rating = Rating.NONE;
     public Status status;
+
+
     
     //Enum untuk status dan rating pengiriman
     enum Status{
         WAITING_CONFIRMATION, CANCELLED, ON_PROGRESS, ON_DELIVERY, COMPLAINT,
-        FINISHED, FAILED;
+        FINISHED, FAILED, DELIVERED;
     }
     
     enum Rating{
@@ -35,13 +38,13 @@ public abstract class Invoice extends Serializable
     }
     
     protected Invoice(int buyerId, int productId){
-        this.date = new Date();
+        this.date = Calendar.getInstance().getTime();
         this.buyerId = buyerId;
         this.productId = productId;
-        this.rating = Rating.NEUTRAL;
-        this.status = Status.ON_PROGRESS;
+        this.rating = Rating.NONE;
+        this.complaintId = -1;
     }
 
-    public abstract double getTotalPay();
+    public abstract double getTotalPay(Product product);
 
 }
