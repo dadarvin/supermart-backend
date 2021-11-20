@@ -1,4 +1,6 @@
 package com.darvinJmartMH;
+import com.darvinJmartMH.dbjson.Serializable;
+
 import java.util.Date;
 import java.text.SimpleDateFormat;
 

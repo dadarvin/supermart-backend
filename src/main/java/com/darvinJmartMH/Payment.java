@@ -26,7 +26,7 @@ public class Payment extends Invoice
         this.shipment = shipment;
     }
 
-    static class Record{
+    public static class Record{
         public final Date date;
         public Status status;
         public String message;

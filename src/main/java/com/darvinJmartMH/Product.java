@@ -1,6 +1,8 @@
 package com.darvinJmartMH;
 
 
+import com.darvinJmartMH.dbjson.Serializable;
+
 /**
  * Write a description of class Product here.
  *

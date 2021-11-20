@@ -4,8 +4,8 @@ import java.util.Vector;
 import java.util.function.Function;
 
 public class ObjectPoolThread<T> extends Thread{
-    private boolean exitSignal;
-    private Vector<T> objectPool;
+    private boolean exitSignal = false;
+    private Vector<T> objectPool = new Vector<>();
     private Function<T, Boolean> routine;
 
     public ObjectPoolThread(String name, Function<T, Boolean> routine) {
@@ -27,21 +27,28 @@ public class ObjectPoolThread<T> extends Thread{
     }
 
     public void run(){
-        while(!exitSignal){
-            try
-            {
-                for(int i = 0; i < objectPool.size(); i++){
-                    if(routine.apply(objectPool.get(i))){
-                        objectPool.remove(objectPool.get(i));
+        while(true){
+            synchronized(this) {
+                while(objectPool.isEmpty() && !exitSignal) {
+                    try {
+                        super.wait();
+                    }
+                    catch(InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
-                synchronized (this){
-                    this.wait();
+                if(exitSignal) {
+                    break;
                 }
             }
-            catch (InterruptedException e) {
-                e.printStackTrace();
+
+            for(int i=0; i<objectPool.size();++i) {
+                if(routine.apply(objectPool.get(i))) {
+                    objectPool.set(i, null);
+                }
             }
+
+            objectPool.removeIf(obj -> obj==null);
         }
     }
 

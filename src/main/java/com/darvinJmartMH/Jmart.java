@@ -1,8 +1,13 @@
 package com.darvinJmartMH;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
+import com.darvinJmartMH.dbjson.JsonDBEngine;
+import com.darvinJmartMH.dbjson.JsonTable;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 
@@ -37,28 +42,27 @@ public class Jmart
     }
 
     public static boolean paymentTimeKeeper(Payment payment){
-        Date timeNow = Calendar.getInstance().getTime();
-        if(payment.history.size() != 0){
-            Payment.Record lastRecord = payment.history.get(payment.history.size() - 1);
-            long timePassed = timeNow.getTime() - lastRecord.date.getTime();
-            if(lastRecord.status == Invoice.Status.WAITING_CONFIRMATION && (timePassed > WAITING_CONF_LIMIT_MS)){
-                payment.history.add(new Payment.Record(Invoice.Status.FAILED, "Gagal"));
+        if(payment.history.size() == 0){
+            return true;
+        }else {
+            Payment.Record record = payment.history.get(payment.history.size() - 1);
+            long elapsed = System.currentTimeMillis() - record.date.getTime();
+            if (record.status.equals(Invoice.Status.WAITING_CONFIRMATION) && (elapsed > WAITING_CONF_LIMIT_MS)) {
+                record.status = Invoice.Status.FAILED;
                 return true;
-            }
-            else if((lastRecord.status == Invoice.Status.ON_PROGRESS) && (timePassed > ON_PROGRESS_LIMIT_MS)){
-                payment.history.add(new Payment.Record(Invoice.Status.FAILED, "Gagal"));
+            } else if (record.status.equals(Invoice.Status.ON_PROGRESS) && (elapsed > ON_PROGRESS_LIMIT_MS)) {
+                record.status = Invoice.Status.FAILED;
                 return true;
-            }
-            else if(lastRecord.status == Invoice.Status.ON_DELIVERY && timePassed > ON_DELIVERY_LIMIT_MS){
-                payment.history.add(new Payment.Record(Invoice.Status.DELIVERED, "TERKIRIM"));
+            } else if (record.status.equals(Invoice.Status.ON_DELIVERY) && (elapsed > ON_PROGRESS_LIMIT_MS)) {
+                record.status = Invoice.Status.DELIVERED;
                 return true;
-            }
-            else if(lastRecord.status == Invoice.Status.DELIVERED && timePassed > DELIVERED_LIMIT_MS){
-                payment.history.add(new Payment.Record(Invoice.Status.FINISHED, "SELESAI"));
+            } else if (record.status.equals(Invoice.Status.DELIVERED) && (elapsed > DELIVERED_LIMIT_MS)) {
+                record.status = Invoice.Status.FINISHED;
                 return true;
+            } else {
+                return false;
             }
         }
-        return false;
     }
 
     public static List<Product> filterByAccountId (List<Product> list, int accountId, int page, int pageSize){
@@ -115,7 +119,36 @@ public class Jmart
     }
 
     public static void main(String args[]){
-        SpringApplication.run(Jmart.class, args);
+        try{
+            JsonTable<Account> accountTable = new JsonTable<Account>();
+            accountTable.writeJson();
+        } catch (IOException e){
+            System.out.println(tree);
+        }
+
+
+//        JsonDBEngine.Run(Jmart.class);
+//        SpringApplication.run(Jmart.class, args);
+//        Runtime.getRuntime().addShutdownHook(new Thread(() ->JsonDBEngine.join()));
+
+//        String password = "password";
+//        String hashedPass = null;
+//        try {
+//
+//            MessageDigest md = MessageDigest.getInstance("MD5");
+//            md.update(password.getBytes());
+//
+//            byte[] bytes = md.digest();
+//
+//            StringBuilder sb = new StringBuilder();
+//            for(int i = 0; i < bytes.length; i++){
+//                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+//            }
+//            hashedPass = sb.toString();
+//            System.out.println(hashedPass);
+//        } catch( NoSuchAlgorithmException e){
+//            e.printStackTrace();
+//        }
 
 //        try{
 //            // sesuaikan argument dibawah dengan lokasi resource file yang Anda unduh di EMAS!

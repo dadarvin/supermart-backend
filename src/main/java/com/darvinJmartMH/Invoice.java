@@ -1,4 +1,6 @@
 package com.darvinJmartMH;
+import com.darvinJmartMH.dbjson.Serializable;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public abstract class Invoice extends Serializable
 
     
     //Enum untuk status dan rating pengiriman
-    enum Status{
+    public enum Status{
         WAITING_CONFIRMATION, CANCELLED, ON_PROGRESS, ON_DELIVERY, COMPLAINT,
         FINISHED, FAILED, DELIVERED;
     }

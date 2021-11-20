@@ -1,4 +1,6 @@
 package com.darvinJmartMH;
+import com.darvinJmartMH.dbjson.Serializable;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,19 +17,16 @@ public class Store extends Serializable
     public String name;
     public String address;
     public String phoneNumber;
-    
-    public Store(int accountId, String name, String address, String phoneNumber){
+    public double balance;
+
+    public Store(String name, String address, String phoneNumber, double balance){
         this.name = name;
         this.address= address;
         this.phoneNumber = phoneNumber;
+        this.balance = balance;
     }
-    
-    public Store(Account account, String name, String address, String phoneNumber){
-        this.name = name;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-    }
-    
+
+
     public boolean read(String content){
         return false;
     }
