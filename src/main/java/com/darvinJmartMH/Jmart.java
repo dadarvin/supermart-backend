@@ -119,17 +119,10 @@ public class Jmart
     }
 
     public static void main(String args[]){
-        try{
-            JsonTable<Account> accountTable = new JsonTable<Account>();
-            accountTable.writeJson();
-        } catch (IOException e){
-            System.out.println(tree);
-        }
 
-
-//        JsonDBEngine.Run(Jmart.class);
-//        SpringApplication.run(Jmart.class, args);
-//        Runtime.getRuntime().addShutdownHook(new Thread(() ->JsonDBEngine.join()));
+        JsonDBEngine.Run(Jmart.class);
+        SpringApplication.run(Jmart.class, args);
+        Runtime.getRuntime().addShutdownHook(new Thread(() ->JsonDBEngine.join()));
 
 //        String password = "password";
 //        String hashedPass = null;
