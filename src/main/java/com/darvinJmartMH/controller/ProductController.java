@@ -75,7 +75,7 @@ public class ProductController implements BasicGetController<Product> {
 //        if(category != null){
 //            newList = Jmart.filterByCategory(newList, category);
 //        }
-//        return newList;
+        return newList;
     }
 
 
