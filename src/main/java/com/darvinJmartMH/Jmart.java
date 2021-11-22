@@ -1,13 +1,9 @@
 package com.darvinJmartMH;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 import com.darvinJmartMH.dbjson.JsonDBEngine;
-import com.darvinJmartMH.dbjson.JsonTable;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 
@@ -65,7 +61,7 @@ public class Jmart
         }
     }
 
-    public static List<Product> filterByAccountId (List<Product> list, int accountId, int page, int pageSize){
+    public static List<com.darvinJmartMH.Product> filterByAccountId (List<Product> list, int accountId, int page, int pageSize){
         //Menggunakan interface Predicate untuk memberikan kondisi
         Predicate<Product> predicate = p -> (p.accountId == accountId);
 

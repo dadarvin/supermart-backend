@@ -11,6 +11,8 @@ import com.darvinJmartMH.dbjson.JsonTable;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,6 +24,26 @@ public class AccountController implements BasicGetController<Account>
 	public static final String REGEX_PASSWORD = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?!.* ).{8,}$";
 	public static final Pattern REGEX_PATTERN_EMAIL = Pattern.compile(REGEX_EMAIL);
 	public static final Pattern REGEX_PATTERN_PASSWORD = Pattern.compile(REGEX_PASSWORD);
+
+	public String hashPassword(String password){
+		try{
+			String generatedPassword = null;
+
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(password.getBytes());
+			byte[] bytes = md.digest();
+
+			StringBuilder sb = new StringBuilder();
+			for(int i = 0; i < bytes.length; i++){
+				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			generatedPassword = sb.toString();
+			return generatedPassword;
+		} catch (NoSuchAlgorithmException e){
+			e.printStackTrace();
+			return password;
+		}
+	}
 
 	@JsonAutowired(value = Account.class, filepath = "C:\\@Pen&Pin\\Dar\\OOP\\OOP_prak\\jmart\\account.json")
 	public static JsonTable<Account> accountTable;
@@ -42,7 +64,7 @@ public class AccountController implements BasicGetController<Account>
 	)
 	{
 		for(Account account : accountTable) {
-			if(account.email.equals(email) && account.password.equals(password))
+			if(account.email.equals(email) && account.password.equals(hashPassword(password)))
 				return account;
 		}
 		return null;
@@ -72,7 +94,7 @@ public class AccountController implements BasicGetController<Account>
 
 		if(!name.isBlank() && emailMatch && passwordMatch && unique){
 
-			Account regAccount = new Account(name, email, password, 0);
+			Account regAccount = new Account(name, email, hashPassword(password), 0);
 			accountTable.add(regAccount);
 			return regAccount;
 
