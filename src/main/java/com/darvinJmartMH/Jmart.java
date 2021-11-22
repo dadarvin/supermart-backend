@@ -61,7 +61,7 @@ public class Jmart
         }
     }
 
-    public static List<com.darvinJmartMH.Product> filterByAccountId (List<Product> list, int accountId, int page, int pageSize){
+    public static List<Product> filterByAccountId (List<Product> list, int accountId, int page, int pageSize){
         //Menggunakan interface Predicate untuk memberikan kondisi
         Predicate<Product> predicate = p -> (p.accountId == accountId);
 
