@@ -53,7 +53,7 @@ public class ProductController implements BasicGetController<Product> {
     }
 
     @GetMapping("/getFiltered")
-    List<Product> getProductFiltered(
+    List<Jmart.Product> getProductFiltered(
             @RequestParam int page,
             @RequestParam int pageSize,
             @RequestParam(defaultValue = "1") int accountId,
@@ -62,19 +62,19 @@ public class ProductController implements BasicGetController<Product> {
             @RequestParam(defaultValue = "1000") int maxPrice,
             @RequestParam(required = false) ProductCategory category
     ){
-        List<Product> newList = new ArrayList<>();
-//        if(accountId != 0){
-//            newList = Jmart.filterByAccountId(newList, accountId, page, pageSize);
-//        }
-//        if(!search.equals("")){
-//            newList = Jmart.filterByName(newList, search, page, pageSize);
-//        }
-//        if(minPrice != 0.0 || maxPrice != 0.0){
-//            newList = Jmart.filterByPrice(newList, minPrice, maxPrice);
-//        }
-//        if(category != null){
-//            newList = Jmart.filterByCategory(newList, category);
-//        }
+        List<Jmart.Product> newList = new ArrayList<>();
+        if(accountId != 0){
+            newList = Jmart.filterByAccountId(newList, accountId, page, pageSize);
+        }
+        if(!search.equals("")){
+            newList = Jmart.filterByName(newList, search, page, pageSize);
+        }
+        if(minPrice != 0.0 || maxPrice != 0.0){
+            newList = Jmart.filterByPrice(newList, minPrice, maxPrice);
+        }
+        if(category != null){
+            newList = Jmart.filterByCategory(newList, category);
+        }
         return newList;
     }
 

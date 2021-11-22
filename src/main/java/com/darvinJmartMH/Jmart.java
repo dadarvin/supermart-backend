@@ -25,7 +25,7 @@ public class Jmart
     public static long ON_PROGRESS_LIMIT_MS = 3;
     public static long WAITING_CONF_LIMIT_MS = 4;
 
-    class Product{
+    public class Product{
         public int accountId;
         public ProductCategory category;
         public boolean conditionUsed;
