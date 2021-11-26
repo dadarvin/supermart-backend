@@ -1,9 +1,6 @@
 package com.darvinJmartMH.controller;
 
-import com.darvinJmartMH.Invoice;
-import com.darvinJmartMH.ObjectPoolThread;
-import com.darvinJmartMH.Payment;
-import com.darvinJmartMH.Shipment;
+import com.darvinJmartMH.*;
 import com.darvinJmartMH.dbjson.JsonAutowired;
 import com.darvinJmartMH.dbjson.JsonTable;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +41,32 @@ public class PaymentController implements BasicGetController<Payment>{
             @RequestParam String shipmentAddress,
             @RequestParam byte shipmentPlan
     ){
+        Account account = null;
+        Product product = null;
+
+        for(Account a : AccountController.accountTable){
+            if(a.id == buyerId){
+                account = a;
+            }
+        }
+
+        for(Product p : ProductController.productTable){
+            if(p.id == productId){
+                product = p;
+            }
+        }
+        if(account != null && product != null){
+            Shipment shipment = new Shipment(shipmentAddress, 0, shipmentPlan, null);
+            Payment payment = new Payment(buyerId, productId, productCount, shipment);
+            double price = payment.getTotalPay(product);
+            if(account.balance >= price){
+                account.balance = account.balance - price;
+                payment.history.add(new Payment.Record(Invoice.Status.WAITING_CONFIRMATION, "Paid, Please wait for confirmation"));
+                paymentTable.add(payment);
+                poolThread.add(payment);
+                return payment;
+            }
+        }
         return null;
     }
 
@@ -51,14 +74,44 @@ public class PaymentController implements BasicGetController<Payment>{
     boolean accept(
             @PathVariable int id
     ){
-        return true;
+        Payment payment = null;
+        for(Payment p : paymentTable){
+            if(p.id == id){
+                payment = p;
+            }
+        }
+        if(payment != null){
+            int size = payment.history.size();
+            Payment.Record lastRecord = payment.history.get(size - 1);
+            if(lastRecord.status == Invoice.Status.WAITING_CONFIRMATION){
+                Payment.Record record = new Payment.Record(Invoice.Status.ON_PROGRESS, "Payment Successful");
+                payment.history.add(record);
+                return true;
+            }
+        }
+        return false;
     }
 
     @PostMapping("/{id}/cancel")
     boolean cancel(
             @PathVariable int id
     ){
-        return true;
+        Payment payment = null;
+        for(Payment p : paymentTable){
+            if(p.id == id){
+                payment = p;
+            }
+        }
+        if(payment != null){
+            int size = payment.history.size();
+            Payment.Record lastRecord = payment.history.get(size - 1);
+            if(lastRecord.status == Invoice.Status.WAITING_CONFIRMATION){
+                Payment.Record record = new Payment.Record(Invoice.Status.CANCELLED, "Payment Cancelled");
+                payment.history.add(record);
+                return true;
+            }
+        }
+        return false;
     }
 
     @PostMapping("/{id}/submit")
@@ -66,7 +119,23 @@ public class PaymentController implements BasicGetController<Payment>{
             @PathVariable int id,
             @RequestParam String receipt
     ){
-        return true;
+        Payment payment = null;
+        for(Payment p : paymentTable){
+            if(p.id == id){
+                payment = p;
+            }
+        }
+        if(payment != null){
+            int size = payment.history.size();
+            Payment.Record lastRecord = payment.history.get(size - 1);
+            if(lastRecord.status == Invoice.Status.ON_PROGRESS && (!receipt.isBlank())){
+                payment.shipment.receipt = receipt;
+                Payment.Record record = new Payment.Record(Invoice.Status.ON_DELIVERY, "Payment Submitted");
+                payment.history.add(record);
+                return true;
+            }
+        }
+        return false;
     }
 
     private static boolean timekeeper(Payment payment){
@@ -75,11 +144,11 @@ public class PaymentController implements BasicGetController<Payment>{
             Payment.Record lastRecord = payment.history.get(payment.history.size() - 1);
             long timePassed = timeNow.getTime() - lastRecord.date.getTime();
             if(lastRecord.status == Invoice.Status.WAITING_CONFIRMATION && (timePassed > WAITING_CONF_LIMIT_MS)){
-                payment.history.add(new Payment.Record(Invoice.Status.FAILED, "Gagal"));
+                payment.history.add(new Payment.Record(Invoice.Status.FAILED, "GAGAL"));
                 return true;
             }
             else if((lastRecord.status == Invoice.Status.ON_PROGRESS) && (timePassed > ON_PROGRESS_LIMIT_MS)){
-                payment.history.add(new Payment.Record(Invoice.Status.FAILED, "Gagal"));
+                payment.history.add(new Payment.Record(Invoice.Status.FAILED, "GAGAL"));
                 return true;
             }
             else if(lastRecord.status == Invoice.Status.ON_DELIVERY && timePassed > ON_DELIVERY_LIMIT_MS){

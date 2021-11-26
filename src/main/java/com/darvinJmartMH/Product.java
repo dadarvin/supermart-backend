@@ -1,6 +1,4 @@
 package com.darvinJmartMH;
-
-
 import com.darvinJmartMH.dbjson.Serializable;
 
 /**

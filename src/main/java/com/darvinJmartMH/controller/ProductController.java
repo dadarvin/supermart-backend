@@ -53,16 +53,9 @@ public class ProductController implements BasicGetController<Product> {
     }
 
     @GetMapping("/getFiltered")
-    List<Jmart.Product> getProductFiltered(
-            @RequestParam int page,
-            @RequestParam int pageSize,
-            @RequestParam(defaultValue = "1") int accountId,
-            @RequestParam(defaultValue = "") String search,
-            @RequestParam(defaultValue = "0") int minPrice,
-            @RequestParam(defaultValue = "1000") int maxPrice,
-            @RequestParam(required = false) ProductCategory category
-    ){
-        List<Jmart.Product> newList = new ArrayList<>();
+    List<Product> getProductFiltered(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int pageSize, @RequestParam(defaultValue = "0") int accountId, @RequestParam(defaultValue = "") String search,
+                                     @RequestParam(defaultValue = "0.0") int minPrice, @RequestParam(defaultValue = "0.0") int maxPrice, @RequestParam(defaultValue = "") ProductCategory category){
+        List<Product> newList = new ArrayList<>();
         if(accountId != 0){
             newList = Jmart.filterByAccountId(newList, accountId, page, pageSize);
         }

@@ -25,18 +25,6 @@ public class Jmart
     public static long ON_PROGRESS_LIMIT_MS = 3;
     public static long WAITING_CONF_LIMIT_MS = 4;
 
-    public class Product{
-        public int accountId;
-        public ProductCategory category;
-        public boolean conditionUsed;
-        public double discount;
-        public String name;
-        public double price;
-        public int shipmentPlans;
-        public int weight;
-        public int id;
-    }
-
     public static boolean paymentTimeKeeper(Payment payment){
         if(payment.history.size() == 0){
             return true;
@@ -76,7 +64,6 @@ public class Jmart
                 filteredList.add(p);
             }
         }
-
         return filteredList;
     }
 
@@ -188,12 +175,12 @@ public class Jmart
             }
         }
 
-//        List<Product> paginatedList = new ArrayList<Product>();
-//        // Membagi Arraylist dalam bentuk sublist sesuai page dan pageSize
-//        for(int i = tempIndex; i < tempIndex + pageSize; i++){
-//            paginatedList.add(filteredList.get(i));
-//        }
-        List<Product> paginatedList = filteredList.subList(tempIndex, (tempIndex+pageSize));
+        List<Product> paginatedList = new ArrayList<Product>();
+        // Membagi Arraylist dalam bentuk sublist sesuai page dan pageSize
+        for(int i = tempIndex; i < tempIndex + pageSize; i++){
+            paginatedList.add(filteredList.get(i));
+        }
+//        List<Product> paginatedList = filteredList.subList(tempIndex, (tempIndex+pageSize));
 
         return paginatedList;
     }
