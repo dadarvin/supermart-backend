@@ -11,12 +11,12 @@ import java.util.List;
 @FunctionalInterface
 public interface BasicGetController<T extends Serializable>  {
     @GetMapping("/id")
-    default T getById(@PathVariable int id){
+    default T getById(int id){
         return Algorithm.<T>find(getJsonTable(), (e) -> e.id == id);
     }
 
     @GetMapping("/page")
-    default List<T> getPage (@PathVariable int page, @PathVariable int pageSize){
+    default List<T> getPage (int page, int pageSize){
         return Algorithm.<T>paginate(getJsonTable(), page, pageSize, e->true);
     }
 

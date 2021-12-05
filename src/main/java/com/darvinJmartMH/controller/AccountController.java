@@ -45,7 +45,7 @@ public class AccountController implements BasicGetController<Account>
 		}
 	}
 
-	@JsonAutowired(value = Account.class, filepath = "C:\\@Pen&Pin\\Dar\\OOP\\OOP_prak\\jmart\\account.json")
+	@JsonAutowired(value = Account.class, filepath = "account.json")
 	public static JsonTable<Account> accountTable;
 
 	public JsonTable<Account> getJsonTable(){
@@ -122,7 +122,7 @@ public class AccountController implements BasicGetController<Account>
 //		return null;
 	}
 
-	@PostMapping("{id}/topUp")
+	@PostMapping("/{id}/topUp")
 	boolean topUp(
 			@PathVariable int id,
 			@RequestParam double balance
@@ -135,5 +135,8 @@ public class AccountController implements BasicGetController<Account>
 			return false;
 		}
 	}
+
+	@GetMapping("/{id}")
+	public Account getByAccountId(@PathVariable int id) { return getById(id); }
 
 }

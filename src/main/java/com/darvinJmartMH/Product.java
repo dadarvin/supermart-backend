@@ -16,7 +16,6 @@ public class Product extends Serializable {
     public double price;
     public byte shipmentPlans;
     public int weight;
-
     
     /**
      * Menambahkan overloading constructor
