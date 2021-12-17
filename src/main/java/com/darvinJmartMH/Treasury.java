@@ -28,11 +28,22 @@ public class Treasury
 //        this.discount = discount;
 //    }
     
+	/**
+     * Method untuk mendapatkan harga yang disesuaikan dengan diskon dan biaya admin
+     * @param price harga awal produk
+     * @param discount persentase diskon pada produk
+     * @return harga setelah disesuaikan dengan potongan
+     */
     public static double getAdjustedPrice(double price, double discount){
         double afterDisc = getDiscountedPrice(price, discount) + getAdminFee(price, discount);
         return afterDisc;
     }
-    
+    /**
+     * Method untuk mendapatkan harga yang sudah dikurangi diskon
+     * @param price harga awal produk
+     * @param discount persentase diskon
+     * @return harga setelah dilakukan potongan
+     */
     private static double getDiscountedPrice(double price, double discount){
         if(discount >= 100.0){
             return 0.0;
@@ -40,7 +51,12 @@ public class Treasury
             return (price - (price * discount/100));
         }
     }
-    
+    /**
+     * Method untuk mendapatkan biaya admin berdasarkan harga yang telah dipotong
+     * @param price harga awal produk
+     * @param discount persentase diskon pada produk
+     * @return biaya admin yang diterapkan
+     */
     public static double getAdminFee(double price, double discount){
         double afterDisc = getDiscountedPrice(price, discount);
         if( afterDisc <= BOTTOM_PRICE){

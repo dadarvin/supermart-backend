@@ -18,7 +18,15 @@ public class Product extends Serializable {
     public int weight;
     
     /**
-     * Menambahkan overloading constructor
+     * Constructor untuk menginstansiasi objek Product
+     * @param accountId berupa id akun atau store yang memiliki produk
+     * @param name nama produk
+     * @param weight berat produk
+     * @param conditionUsed kondisi dari produk (baru / second)
+     * @param price harga produk
+     * @param discount diskon produk
+     * @param category kategori produk
+     * @param shipmentPlans jenis shipment delivery yang digunakan untuk mengirim produk
      */
     public Product(int accountId, String name, int weight, boolean conditionUsed, double price, double discount, ProductCategory category, byte shipmentPlans){
         this.accountId = accountId;
@@ -31,8 +39,9 @@ public class Product extends Serializable {
         this.shipmentPlans = shipmentPlans;
     }
 
-    /*
-     * @return Mengembalikan informasi pemilik produk
+    /**
+     * Method untuk menampilkan informasi-informasi dari objek Product
+     * @return string berisi informasi-informasi dari objek Product
      */
     public String toString(){
         return "Name: " + this.name +

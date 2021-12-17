@@ -16,6 +16,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class yang berisi perintah Spring untuk menerima request modifikasi terhadap objek Account
+ */
 @RestController
 @RequestMapping("/account")
 public class AccountController implements BasicGetController<Account>
@@ -25,6 +28,12 @@ public class AccountController implements BasicGetController<Account>
 	public static final Pattern REGEX_PATTERN_EMAIL = Pattern.compile(REGEX_EMAIL);
 	public static final Pattern REGEX_PATTERN_PASSWORD = Pattern.compile(REGEX_PASSWORD);
 
+	/**
+	 * Method untuk melakukan enkripsi pada variabel password
+	 * @param password string password yang akan dienkripsi
+	 * @return hasil enkripsi yang telah dilakukan pada password
+	 * @throws NoSuchAlgorithmException atau algoritma tidak exist
+	 */
 	public String hashPassword(String password){
 		try{
 			String generatedPassword = null;
@@ -47,7 +56,11 @@ public class AccountController implements BasicGetController<Account>
 
 	@JsonAutowired(value = Account.class, filepath = "account.json")
 	public static JsonTable<Account> accountTable;
-
+	
+	/**
+	 * Method untuk menemukan list yang berisikan objek Account yang terdapat pada tabel json
+	 * @return list yang berisikan objek Account yang terdaftar pada tabel json
+	 */
 	public JsonTable<Account> getJsonTable(){
 		return accountTable;
 	}
@@ -56,7 +69,12 @@ public class AccountController implements BasicGetController<Account>
 	String index() {
 		return "account page";
 	}
-
+	/**
+	 * Method untuk memvalidasi kredensial login yang dimasukkan oleh user
+	 * @param email email dari objek Account
+	 * @param password password dari objek Account
+	 * @return objek Account yang memiliki email dan password yang cocok, dan null jika tidak ada objek Account yang sesuai
+	 */
 	@PostMapping("/login")
 	Account login(
 			@RequestParam String email,
@@ -70,7 +88,13 @@ public class AccountController implements BasicGetController<Account>
 		return null;
 	}
 
-
+	/**
+	 * Method untuk registrasi Account baru dengan menginstansiasi objek Account
+	 * @param name nama yang akan didaftarkan
+	 * @param email email yang akan didaftarkan
+	 * @param password password yang akan didaftarkan
+	 * @return objek Account yang sudah berhasil didaftarkan atau null jika Account tidak berhasil didaftarkan
+	 */
 	@PostMapping("/register")
 	Account register
 	(
@@ -102,7 +126,15 @@ public class AccountController implements BasicGetController<Account>
 			return null;
 		}
 	}
-
+	
+	/**
+	 * Method untuk melakukan pendaftaran toko pada suatu existing acount
+	 * @param id id dari suatu objek Account yang ingin mendaftarkan toko
+	 * @param name nama dari toko yang akan didaftarkan
+	 * @param address alamat dari toko yang akan didaftarkan
+	 * @param phoneNumber nomor telepon dari toko yang akan didaftarkan
+	 * @return objek Store yang berhasil didaftarkan atau null jika tidak berhasil didaftarkan
+	 */
 	@PostMapping("/{id}/registerStore")
 	Store registerStore
 	(
@@ -122,6 +154,12 @@ public class AccountController implements BasicGetController<Account>
 //		return null;
 	}
 
+	/**
+	 * Method untuk melakukan top up atau penambahan balance pada suatu account
+	 * @param id id dari objek Account yang ingin melakukan top up
+	 * @param balance balance dari objek Account yang ingin melakukan top up sebelum di-top up
+	 * @return true jika balance pada objek Account berhasil di top up, false jika tidak berhasil
+	 */
 	@PostMapping("/{id}/topUp")
 	boolean topUp(
 			@PathVariable int id,
@@ -135,7 +173,11 @@ public class AccountController implements BasicGetController<Account>
 			return false;
 		}
 	}
-
+/**
+	 * Method untuk mengambil objek Account dari json berdasarkan id nya
+	 * @param id nilai id dari suatu objek Account
+	 * @return objek Account yang memiliki id sesuai dengan parameter
+	 */
 	@GetMapping("/{id}")
 	public Account getByAccountId(@PathVariable int id) { return getById(id); }
 

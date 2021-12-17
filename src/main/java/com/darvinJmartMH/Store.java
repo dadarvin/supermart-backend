@@ -1,16 +1,15 @@
 package com.darvinJmartMH;
-import com.darvinJmartMH.dbjson.Serializable;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Write a description of class Store here.
+ * Class for Store
  *
  * @author Darvin
- * @version Modul 3
+ * @version Proyek Akhir OOP
  */
-public class Store extends Serializable
+public class Store 
 {
     public static final String REGEX_NAME = "^[A-Z](?!.*(\\s)\1).{4,20}$";
     public static final String REGEX_PHONE = "^\\d{9,12}$"; 
@@ -19,6 +18,13 @@ public class Store extends Serializable
     public String phoneNumber;
     public double balance;
 
+    /**
+     * Constructor untuk menginstansiasi objek Store
+     * @param name nama toko
+     * @param address alamat toko
+     * @param phoneNumber nomor telepon toko
+     * @param balance balance yang dimiliki toko
+     */
     public Store(String name, String address, String phoneNumber, double balance){
         this.name = name;
         this.address= address;
@@ -26,19 +32,21 @@ public class Store extends Serializable
         this.balance = balance;
     }
 
-
-    public boolean read(String content){
-        return false;
-    }
-    
-    /*
-     * @return Mengembalikan informasi toko
+    /**
+     * Method untuk menampilkan informasi toko
+     * @return string yang berisikan informasi-informasi dari toko
      */
-    public String toString(){
+    public String toString()
+    {
         return "name: " + this.name + 
         "\naddress: " + this.address + 
         "\nphoneNumber: " + this.phoneNumber;
     }
+    
+    /**
+     * Method untuk melakukan validasi terhadap nama toko dan nomor telepon
+     * @return true = validated, false = not validated
+     */
     
     public boolean validate(){
         Pattern namePattern = Pattern.compile(REGEX_NAME);
@@ -48,10 +56,6 @@ public class Store extends Serializable
         boolean nameMatch = nameMatcher.find();
         boolean phoneMatch = phoneMatcher.find();
         
-        if(nameMatch == true && phoneMatch == true){
-            return true;
-        } else {
-            return false;
-        }
+        return (nameMatch && phoneMatch);
     }
 }

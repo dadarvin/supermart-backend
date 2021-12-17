@@ -2,10 +2,10 @@ package com.darvinJmartMH;
 
 
 /**
- * Write a description of class ProductRating here.
+ * Class of ProductRating
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Darvin
+ * @version Proyek Akhir OOP
  */
 public class ProductRating{
     private long total;
@@ -22,7 +22,12 @@ public class ProductRating{
     }
     
     public double getAverage(){
-        return ((double)total/count);
+        
+        if(count == 0)
+        {
+            return 0.0;
+        }
+        return ((double) total/count);
     }
     
     public long getCount(){

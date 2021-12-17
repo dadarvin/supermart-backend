@@ -3,56 +3,86 @@ package com.darvinJmartMH;
 import java.util.Vector;
 import java.util.function.Function;
 
+/**
+ * Class untuk ObjectPoolThread yang mengatur proses multi-threading
+ * @param <T> jenis class
+ */
 public class ObjectPoolThread<T> extends Thread{
-    private boolean exitSignal = false;
-    private Vector<T> objectPool = new Vector<>();
+    private boolean exitSignal;
+    private Vector<T> objectPool = new Vector<T>();
     private Function<T, Boolean> routine;
 
-    public ObjectPoolThread(String name, Function<T, Boolean> routine) {
+    /**
+     * Constructor untuk instansiasi ObjectPoolThread
+     * @param name nama dari thread
+     * @param routine method yang dijadikan pada routine
+     */
+    public ObjectPoolThread(String name, Function<T, Boolean> routine){
         super(name);
         this.routine = routine;
     }
 
-    public ObjectPoolThread(Function<T, Boolean> routine) {
+    /**
+     * Constructor untuk mengisntansiasi ObjectPoolThread
+     * @param routine method yang akan dijadikan routine
+     */
+    public ObjectPoolThread(Function<T, Boolean> routine){
+        super();
         this.routine = routine;
     }
 
+    /**
+     * Method untuk mengembalikan jumlah thread yang sedang dijalankan
+     * @return jumlah dari thread yang berjalan
+     */
+    public int size(){
+        return objectPool.size();
+    }
+
+    /**
+     * Method untuk menambahbahkan objek pada thread dengan sinkronisasi agar tidak terjadi racing
+     * @param object object yang ingin ditambahkan
+     */
     public synchronized void add(T object){
         objectPool.add(object);
         this.notify();
     }
 
+    /**
+     * Method untuk keluar dari loop run pada thread agar thread mati
+     */
     public synchronized void exit(){
         exitSignal = true;
+        this.notify();
     }
 
-    public void run(){
-        while(true){
-            synchronized(this) {
-                while(objectPool.isEmpty() && !exitSignal) {
-                    try {
-                        super.wait();
-                    }
-                    catch(InterruptedException e) {
-                        e.printStackTrace();
-                    }
+    /**
+     * Method yang akan dijalankan pada setiap thread ketika dalam kondisi running
+     */
+    public void run()
+    {
+        while(true)
+        {
+            for(int i = 0; i < objectPool.size(); i++)
+            {
+                T object = objectPool.get(i);
+                if (routine.apply(object))      
+                {
+                    objectPool.remove(i);       
+                    --i;
                 }
-                if(exitSignal) {
+            }
+            synchronized (this)                    
+            {
+                while (objectPool.isEmpty() && !exitSignal)         
+                {
+                    try { this.wait(); }                            
+                    catch (InterruptedException e) {}
+                }
+                if(exitSignal) {                        
                     break;
                 }
             }
-
-            for(int i=0; i<objectPool.size();++i) {
-                if(routine.apply(objectPool.get(i))) {
-                    objectPool.set(i, null);
-                }
-            }
-
-            objectPool.removeIf(obj -> obj==null);
         }
-    }
-
-    public int size(){
-        return objectPool.size();
     }
 }

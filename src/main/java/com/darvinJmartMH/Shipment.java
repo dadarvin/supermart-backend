@@ -27,6 +27,10 @@ public class Shipment
     static class Plan{
         public final byte bit;
 
+        /**
+         * Constructor untuk menginstansiasi objek Plan
+         * @param bit bit merepresentasikan jenis shipment yang dipilih
+         */
         private Plan(byte bit){
             this.bit = bit;
         }
@@ -50,7 +54,13 @@ public class Shipment
 //            return ( (this.bit & reference.bit) == reference.bit );
 //        }
 //    }
-    
+    /**
+     * Constructor untuk menginstansiasi objek Shipment
+     * @param address alamat pembeli
+     * @param cost harga shipment / pengiriman produk
+     * @param plan tipe shipment dalam bentuk byte
+     * @param receipt receipt / nomor barcode
+     */
     public Shipment(String address, int cost, byte plan, String receipt) {
         this.address = address;
         this.cost = cost;
@@ -58,27 +68,54 @@ public class Shipment
         this.receipt = receipt;
     }
 
-    public String getEstimatedArrival(Date reference){
-        Calendar est = Calendar.getInstance();
-        est.setTime(reference);
-
-        if(plan == INSTANT.bit || plan == SAME_DAY.bit){
-            est.add(Calendar.DATE, 0);
-        } else if(plan == NEXT_DAY.bit){
-            est.add(Calendar.DATE, 1);
-        } else if(plan == REGULER.bit){
-            est.add(Calendar.DATE, 2);
-        } else if(plan == KARGO.bit){
-            est.add(Calendar.DATE, 3);
+    /**
+     * Method untuk menentukan waktu suatu produk akan tiba berdasarkan shipment
+     * @param reference tanggal pembelian suatu produk
+     * @return tanggal produk akan tiba berdasarkan jenis shipment
+     */
+    public String getEstimatedArrival(Date reference)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(reference);
+        if((plan == INSTANT.bit) || (plan == SAME_DAY.bit))
+        {
+			//Arrive in the same day
+            cal.add(Calendar.DATE, 0);          
         }
-
-        return ESTIMATION_FORMAT.format(est.getTime());
+        else if(plan == NEXT_DAY.bit)
+        {
+			//Arrive Tomorrow
+            cal.add(Calendar.DATE, 1);          
+        }
+        else if(plan == REGULER.bit)
+        {
+			//Arrive the day after tomorrow
+            cal.add(Calendar.DATE, 2);          
+        }
+        else if(plan == KARGO.bit)
+        {
+			//Arrive in a week
+            cal.add(Calendar.DATE, 7);          
+        }
+        String currentDate = ESTIMATION_FORMAT.format(cal.getTime());
+        return currentDate;
     }
 
+    /**
+     * Method untuk melakukan pengecekan terhadap shipment yang digunakan
+     * @param reference tipe shipment yang digunakan
+     * @return true jika sudah sesuai, false jika sebaliknya
+     */
     public boolean isDuration(Plan reference){
         return (this.plan & reference.bit) == reference.bit;
     }
 
+    /**
+     * Method untuk mengecek jenis shipment yang digunakan berdasarkan parameter object btye
+     * @param object nilai objek byte
+     * @param reference tipe shipment yang digunakan
+     * @return true=sesuai; false=tidak sesuai
+     */
     public boolean isDuration(byte object, Plan reference){
         return (object & reference.bit) == reference.bit;
     }

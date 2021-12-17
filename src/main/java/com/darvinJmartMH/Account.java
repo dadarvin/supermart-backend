@@ -37,11 +37,13 @@ public class Account extends Serializable
 
         boolean emailMatch = emailMatcher.find();
         boolean passwordMatch = passwordMatcher.find();
-        
-        if(emailMatch == true && passwordMatch == true){
-            return true;
-        } else {
-            return false;
-        }
+
+        return (emailMatch && passwordMatch);
+    }
+
+    public String toString()
+    {
+        String str = "name: " + this.name + "\nemail: " + this.email + "\npassword: " + this.password;
+        return str;
     }
 }

@@ -6,39 +6,33 @@ import java.util.Date;
 import java.util.ArrayList;
 
 /**
- * Write a description of class Invoice here.
+ * Class for Invoice
  *
  * @author Darvin
- * @version Modul 3 Tutam
+ * @version Proyek Akhir OOP
  */
 public abstract class Invoice extends Serializable
 {
     public Date date;
-    public ArrayList<Record> history = new ArrayList<Record>();
     public int buyerId;
     public int productId;
     public int complaintId;
     public Rating rating = Rating.NONE;
     public Status status;
 
-
-    
     //Enum untuk status dan rating pengiriman
     public enum Status{
         WAITING_CONFIRMATION, CANCELLED, ON_PROGRESS, ON_DELIVERY, COMPLAINT,
         FINISHED, FAILED, DELIVERED;
     }
-    
     enum Rating{
         NONE, BAD, NEUTRAL, GOOD;
     }
-    
-    class Record{
-        public Date date;
-        public String message;
-        public Status status;
-    }
-    
+    /**
+     * Constructor untuk menginstansiasi objek Invoice
+     * @param buyerId id dari pembeli / id dari account pembeli
+     * @param productId id dari produk
+     */
     protected Invoice(int buyerId, int productId){
         this.date = Calendar.getInstance().getTime();
         this.buyerId = buyerId;
@@ -47,6 +41,11 @@ public abstract class Invoice extends Serializable
         this.complaintId = -1;
     }
 
+    /**
+     * Method untuk menghitung total biaya yang perlu dibayarkan
+     * @param product produk yang akan dibeli
+     * @return harga total produk yang akan dibeli
+     */
     public abstract double getTotalPay(Product product);
 
 }

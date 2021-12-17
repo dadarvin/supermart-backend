@@ -24,9 +24,14 @@ public class Complaint extends Serializable
         this.date = new Date();
     }
 
-    
-    public String toString(){
-        SimpleDateFormat COMPLAINT_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
-        return "Complaint{date=" + COMPLAINT_FORMAT.format(date) + ", desc='"+ desc +"'}";
+    /**
+     * Method untuk menampilkan informasi complaint dalam bentuk string
+     * @return mengembalikan informasi complaint
+     */
+    public String toString()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String str = "Complaint{date=" + sdf.format(this.date) + ", desc='" + this.desc + "'}";
+        return str;
     }
 }
