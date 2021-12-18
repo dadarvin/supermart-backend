@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Write a description of class Payment here.
+ * Class untuk pembayaran produk
  *
  * @author Darvin
  * @version Proyek akhir OOP

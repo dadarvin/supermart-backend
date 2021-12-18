@@ -5,6 +5,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Class yang berisi beberapa algoritma untuk functionality aplikasi
+ */
 public class Algorithm {
     private Algorithm(){
     }

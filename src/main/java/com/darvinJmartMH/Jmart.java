@@ -11,7 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Write a description of class Jmart here.
+ * Class jmart sebagai main untuk menjalankan framework spring
  *
  * @author Darvin
  * @version 18/09/2021

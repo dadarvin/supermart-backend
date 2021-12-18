@@ -2,7 +2,7 @@ package com.darvinJmartMH;
 
 
 /**
- * Class of ProductRating
+ * Class untuk rating produk
  *
  * @author Darvin
  * @version Proyek Akhir OOP

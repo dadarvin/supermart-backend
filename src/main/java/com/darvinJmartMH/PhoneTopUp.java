@@ -1,5 +1,8 @@
 package com.darvinJmartMH;
 
+/**
+ * Class untuk melakukan top up
+ */
 public class PhoneTopUp extends Invoice{
     public String phoneNumber;
     public Status status;

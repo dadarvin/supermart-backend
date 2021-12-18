@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Write a description of class Account here.
+ * Class untuk instansiasi akun pada jmart
  *
  * @author Darvin
  * @version Modul 3

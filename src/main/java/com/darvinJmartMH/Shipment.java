@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.Calendar;
 
 /**
- * Write a description of class Shipment here.
+ * Class untuk jenis shipment yang digunakan
  *
  * @author Darvin
  * @version Modul 3 Tutam
@@ -35,25 +35,7 @@ public class Shipment
             this.bit = bit;
         }
     }   
-    
-    //innerClass dari ShipmentDuration untuk mencari kesamaan
-//    class MultiDuration{
-//        public byte bit;
-//
-//         public MultiDuration(Duration... args){
-//            byte kurir = args[0].bit;
-//
-//            for(int i=1; i<args.length; i++){
-//                kurir = (byte) (kurir | args[i].bit);
-//            }
-//
-//            bit = kurir;
-//        }
-//
-//        public boolean isDuration(Duration reference){
-//            return ( (this.bit & reference.bit) == reference.bit );
-//        }
-//    }
+
     /**
      * Constructor untuk menginstansiasi objek Shipment
      * @param address alamat pembeli

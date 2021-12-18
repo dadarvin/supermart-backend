@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.ArrayList;
 
 /**
- * Class for Invoice
+ * Class untuk invoice akun maupun toko
  *
  * @author Darvin
  * @version Proyek Akhir OOP

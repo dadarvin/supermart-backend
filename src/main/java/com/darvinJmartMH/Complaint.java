@@ -5,7 +5,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 /**
- * Write a description of class Complaint here.
+ * Class untuk melakukan komplen produk
  *
  * @author Darvin
  * @version Modul 3

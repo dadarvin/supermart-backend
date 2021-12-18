@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Class for Store
+ * Class untuk toko dari akun
  *
  * @author Darvin
  * @version Proyek Akhir OOP

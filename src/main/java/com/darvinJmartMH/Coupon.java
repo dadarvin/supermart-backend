@@ -4,7 +4,7 @@ package com.darvinJmartMH;
 import com.darvinJmartMH.dbjson.Serializable;
 
 /**
- * Write a description of class Coupon here.
+ * Class untuk penggunaan kupon pada produk
  *
  * @author Darvin
  * @version 20/09/2021

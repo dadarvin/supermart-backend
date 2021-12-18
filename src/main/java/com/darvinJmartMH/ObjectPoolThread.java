@@ -4,7 +4,7 @@ import java.util.Vector;
 import java.util.function.Function;
 
 /**
- * Class untuk ObjectPoolThread yang mengatur proses multi-threading
+ * Class ObjectPoolThread yang menjalankan proses multithtreading pada payment
  * @param <T> jenis class
  */
 public class ObjectPoolThread<T> extends Thread{

@@ -2,7 +2,7 @@ package com.darvinJmartMH;
 
 
 /**
- * Write a description of class PriceTag here.
+ * class untuk pengaturan harga produk
  *
  * @author Darvin
  * @version 18/09/20
@@ -13,20 +13,6 @@ public class Treasury
     public final static double COMMISSION_MULTIPLIER = 0.05;
     public final static double BOTTOM_PRICE = 20000.0;
     public final static double BOTTOM_FEE = 1000.0;
-//    public double discount;
-//    public double price;
-    
-//    //Constructor dengan parameter price
-//    public Treasury(double price){
-//        this.price = price;
-//        this.discount = 0.0;
-//    }
-//
-//    //Constructor dengan parameter price dan discount
-//    public Treasury(double price, double discount){
-//        this.price = price;
-//        this.discount = discount;
-//    }
     
 	/**
      * Method untuk mendapatkan harga yang disesuaikan dengan diskon dan biaya admin
